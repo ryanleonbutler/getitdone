@@ -1,16 +1,16 @@
 # getitdone
 
 ### About
-Basic command line todo list application.
+Command line to-do list application.
 
 I was browsing on the Internet and wanted a really basic todo list application, which was free and opensource. Since I am in the process of learning more about software development I decided to create my own.
 
 
 ### Installation
-$ pip install todolist
+$ pip install getitdone
 
 ### Uninstall
-$ pip uninstall todolist
+$ pip uninstall getitdone
 
 ### User Manual
 ```
