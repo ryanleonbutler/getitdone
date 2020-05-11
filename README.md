@@ -12,6 +12,11 @@
 ### Uninstall
 `$ pip uninstall getitdone`
 
+### Usage
+![](https://github.com/ryanleonbutler/getitdone/blob/master/images/image1.jpg?raw=true)
+
+
+
 ### User Manual
     OPTIONS
         --new or -n '<task-name>'
