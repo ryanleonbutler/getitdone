@@ -17,7 +17,9 @@
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
+from sys import argv
+from os import mkdir
+from pathlib import Path
 
 import sqlite3
 from sqlite3 import Error
@@ -98,7 +100,6 @@ def command_help():
 
 
 def create_connection(path):
-    # TODO: path of db needs to be dynamic to user folder
     connection = None
     try:
         connection = sqlite3.connect(path)
@@ -138,26 +139,30 @@ create_table = """
 if __name__ == "__main__":
     tasks = Todolist()
 
-    # TODO: path of db needs to be dynamic to user folder
-    connection = create_connection("getitdonedb.sqlite")
+    home = str(Path.home())
+    try:
+        mkdir(f"{home}/.getitdone")
+    except FileExistsError:
+        pass
+    connection = create_connection(f"{home}/.getitdone/getitdone_db.sqlite")
     execute_query(connection, create_table)
-    action = sys.argv[1].lower()
 
+    action = argv[1].lower()
     try:
         if action == "--new" or action == "-n":
-            task_name = sys.argv[2]
+            task_name = argv[2]
             task = Task(task_name)
             new(task_name)
-        elif sys.argv[1] == "--update" or sys.argv[1] == "-u":
-            task_name = sys.argv[2]
-            new_name = sys.argv[3]
+        elif argv[1] == "--update" or argv[1] == "-u":
+            task_name = argv[2]
+            new_name = argv[3]
             update(task_name, new_name)
-        elif sys.argv[1] == "--delete" or sys.argv[1] == "-d":
-            task_name = sys.argv[2]
+        elif argv[1] == "--delete" or argv[1] == "-d":
+            task_name = argv[2]
             delete(task_name)
-        elif sys.argv[1] == "--show" or sys.argv[1] == "-s":
+        elif argv[1] == "--show" or argv[1] == "-s":
             show()
-        elif sys.argv[1] == "--help" or sys.argv[1] == "-h":
+        elif argv[1] == "--help" or argv[1] == "-h":
             command_help()
         else:
             print("Please refer to help (`--help` or `-h`) for instructions\n")

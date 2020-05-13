@@ -1,20 +1,17 @@
-import pathlib
 from setuptools import setup
 
-# The directory containing this file
-HERE = pathlib.Path(__file__).parent
-
 # The text of the README file
-README = (HERE / "README.md").read_text()
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 # This call to setup() does all the work
 setup(
     name="getitdone",
-    version="0.1.0",
+    version="0.0.1",
     description="Manage your to-do lists from the command line",
-    long_description=README,
+    long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://ryanleonbutler.com",
+    url="https://ryanbutler.online",
     author="Ryan Butler",
     author_email="ryanleonbutler@gmail.com",
     license="AGPL",
@@ -29,9 +26,5 @@ setup(
     packages=["getitdone"],
     include_package_data=True,
     install_requires=[],
-    entry_points={
-        "console_scripts": [
-            "getitdone=getitdone.main:main",
-        ]
-    },
+    scripts=["getitdone/getitdone"],
 )
