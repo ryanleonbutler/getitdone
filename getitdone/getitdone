@@ -16,66 +16,67 @@
 #
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-from sys import argv
+import sqlite3
 from os import mkdir
 from pathlib import Path
-
-import sqlite3
 from sqlite3 import Error
+from sys import argv
 
 
-class Todolist:
-    def __init__(self):
-        self.list = []
+def insert_db(taskName: str):
+    """Insert new task into database.
 
-
-class Task:
-    def __init__(self, task_name):
-        self.task_name = task_name
-
-
-def new(task_name):
+    Args:
+        taskName (str): Name of task.
+    """
     query = f"""
         INSERT INTO
         tasks (name)
         VALUES
-        ('{task_name}')
+        ('{taskName}')
     """
     execute_query(connection, query)
-    print(f"'{task_name}' added to list")
+    print(f"'{taskName}' added to list")
 
 
-def update(task_name, new_name):
-    user_input = input(
-        f"Update '{task_name}' with '{new_name}'? Y/N "
-    )
-    query = f"""
-        UPDATE tasks
-        SET name = '{new_name}'
-        WHERE name = '{task_name}'
+def update_db(taskName: str, newName: str):
+    """Update task in database.
+
+    Args:
+        taskName (str): Current name of task.
+        newName (str): New name of task.
     """
-    execute_query(connection, query)
-    print(f"'{task_name}' updated to `{new_name}`")
-
-
-def delete(task_name):
-    user_input = input(f"Delete '{task_name}' from your list? Y/N ")
-    if user_input.lower() == "y":
-        query = f"DELETE FROM tasks WHERE name = '{task_name}'"
+    userInput = input(f"Update '{taskName}' with '{newName}'? Y/N ")
+    if userInput.lower() == "y":
+        query = f"""
+            UPDATE tasks
+            SET name = '{newName}'
+            WHERE name = '{taskName}'
+        """
         execute_query(connection, query)
-        print(f"'{task_name}' deleted")
-    else:
-        pass
+        print(f"'{taskName}' updated to `{newName}`")
 
 
-def show():
+def delete_db(taskName: str):
+    """Delete task from database.
+
+    Args:
+        taskName (str): Task name to be deleted.
+    """
+    userInput = input(f"Delete '{taskName}' from your list? Y/N ")
+    if userInput.lower() == "y":
+        query = f"DELETE FROM tasks WHERE name = '{taskName}'"
+        execute_query(connection, query)
+        print(f"'{taskName}' deleted")
+
+
+def list_tasks():
+    """List all tasks in database."""
     query = "SELECT * FROM tasks"
     response = execute_read_query(connection, query)
-    print("\n### get-it-done ###\n\n"
-          "-----------------")
+    print("\n### get-it-done ###\n\n" "-----------------")
     if len(response) < 1:
-        print(f"...No tasks...")
+        print("...No tasks...")
     else:
         for task in response:
             print(f"{task[0]} - {task[1]}")
@@ -83,23 +84,32 @@ def show():
 
 
 def command_help():
+    """Print help with available list of commands and arguments."""
     print("\n### get-it-done ###\n")
     print(
         "OPTIONS\n"
         "\t`--new` or `-n` '<task-name>'\n"
         "\t\tCreate a new task with name in first argument\n\n"
         "\t`--update` or `-u` '<task-name>' '<new-name>'\n"
-        "\t\tUpdate task in first argument with value second argument\n\n"
+        "\t\tUpdate task in first argument with value of second argument\n\n"
         "\t`--delete` or `-d` '<task-name>'\n"
-        "\t\tDelete task in first argument with value second argument\n\n"
-        "\t`--show` or `-s` '<task-name>'\n"
-        "\t\tDelete task in first argument with value second argument\n\n"
+        "\t\tDelete task in first argument with value of second argument\n\n"
+        "\t`--show` or `-s`; `--list` or `-l`\n"
+        "\t\tList/show all tasks\n\n"
         "\t`--help` or `-h`\n"
         "\t\tShows man page for todolist\n"
     )
 
 
-def create_connection(path):
+def create_connection(path: str) -> object:
+    """Create connection with database.
+
+    Args:
+        path (str): Path to the database.
+
+    Returns:
+        [type]: [description]
+    """
     connection = None
     try:
         connection = sqlite3.connect(path)
@@ -108,7 +118,13 @@ def create_connection(path):
     return connection
 
 
-def execute_query(connection, query):
+def execute_query(connection: object, query: str):
+    """Execute SQL write query with connection to database and commit the write.
+
+    Args:
+        connection (object): Database connection
+        query (str): SQL query
+    """
     cursor = connection.cursor()
     try:
         cursor.execute(query)
@@ -117,7 +133,16 @@ def execute_query(connection, query):
         print(f"The error '{e}' occurred")
 
 
-def execute_read_query(connection, query):
+def execute_read_query(connection: object, query: str) -> object:
+    """Execute SQL read query with connection to the database.
+
+    Args:
+        connection (object): Database connection
+        query (str): SQL query
+
+    Returns:
+        object: Result object from database
+    """
     cursor = connection.cursor()
     result = None
     try:
@@ -128,43 +153,43 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' occurred")
 
 
-create_table = """
+if __name__ == "__main__":
+    home = str(Path.home())
+    createTable = """
     CREATE TABLE IF NOT EXISTS tasks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
     );
-"""
-
-
-if __name__ == "__main__":
-    tasks = Todolist()
-
-    home = str(Path.home())
+    """
     try:
         mkdir(f"{home}/.getitdone")
     except FileExistsError:
         pass
     connection = create_connection(f"{home}/.getitdone/getitdone_db.sqlite")
-    execute_query(connection, create_table)
+    execute_query(connection, createTable)
 
     action = argv[1].lower()
     try:
         if action == "--new" or action == "-n":
-            task_name = argv[2]
-            task = Task(task_name)
-            new(task_name)
+            taskName = argv[2]
+            insert_db(taskName)
         elif argv[1] == "--update" or argv[1] == "-u":
-            task_name = argv[2]
-            new_name = argv[3]
-            update(task_name, new_name)
+            taskName = argv[2]
+            newName = argv[3]
+            update_db(taskName, newName)
         elif argv[1] == "--delete" or argv[1] == "-d":
-            task_name = argv[2]
-            delete(task_name)
-        elif argv[1] == "--show" or argv[1] == "-s":
-            show()
+            taskName = argv[2]
+            delete_db(taskName)
+        elif (
+            argv[1] == "--show"
+            or argv[1] == "-s"
+            or argv[1] == "--list"
+            or argv[1] == "-l"
+        ):
+            list_tasks()
         elif argv[1] == "--help" or argv[1] == "-h":
             command_help()
         else:
             print("Please refer to help (`--help` or `-h`) for instructions\n")
-    except IndexError as err:
+    except IndexError:
         print("Please refer to help (`--help` or `-h`) for instructions\n")

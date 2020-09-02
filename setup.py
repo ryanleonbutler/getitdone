@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 # This call to setup() does all the work
 setup(
     name="getitdone",
-    version="0.0.1",
+    version="0.0.2",
     description="Manage your to-do lists from the command line",
     long_description=long_description,
     long_description_content_type="text/markdown",
