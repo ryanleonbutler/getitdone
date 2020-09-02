@@ -94,8 +94,8 @@ def command_help():
         "\t\tUpdate task in first argument with value of second argument\n\n"
         "\t`--delete` or `-d` '<task-name>'\n"
         "\t\tDelete task in first argument with value of second argument\n\n"
-        "\t`--show` or `-s`; `--list` or `-l`\n"
-        "\t\tList/show all tasks\n\n"
+        "\t`--list` or `-l`\n"
+        "\t\tList all tasks\n\n"
         "\t`--help` or `-h`\n"
         "\t\tShows man page for todolist\n"
     )
@@ -180,12 +180,7 @@ if __name__ == "__main__":
         elif argv[1] == "--delete" or argv[1] == "-d":
             taskName = argv[2]
             delete_db(taskName)
-        elif (
-            argv[1] == "--show"
-            or argv[1] == "-s"
-            or argv[1] == "--list"
-            or argv[1] == "-l"
-        ):
+        elif argv[1] == "--list" or argv[1] == "-l":
             list_tasks()
         elif argv[1] == "--help" or argv[1] == "-h":
             command_help()

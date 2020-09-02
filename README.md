@@ -29,7 +29,7 @@ $ pip uninstall getitdone
             Update task in first argument with value second argument
         --delete or -d '<task-name>'
             Delete task in first argument with value second argument
-        --show or -s '<task-name>'
+        --list or -l '<task-name>'
             Delete task in first argument with value second argument
         --help or -h
             Shows man page for todolist
