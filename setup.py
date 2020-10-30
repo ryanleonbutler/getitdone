@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 # This call to setup() does all the work
 setup(
     name="getitdone",
-    version="0.0.2",
+    version="0.0.3",
     description="Manage your to-do lists from the command line",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -26,5 +26,9 @@ setup(
     packages=["getitdone"],
     include_package_data=True,
     install_requires=[],
-    scripts=["getitdone/getitdone"],
+    # scripts=["getitdone/getitdone.py"],
+    entry_points='''
+        [console_scripts]
+        getitdone=getitdone.getitdone.__main__:main
+    ''',
 )
