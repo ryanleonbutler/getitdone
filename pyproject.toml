@@ -14,6 +14,7 @@ home-page = "https://github.com/ryanleonbutler/getitdone"
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ]
 description-file = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.6"

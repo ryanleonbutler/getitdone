@@ -4,4 +4,4 @@
 Copyright (C) 2021  Ryan Butler
 """
 
-__version__ = "0.1.7"
+__version__ = "0.1.8"
