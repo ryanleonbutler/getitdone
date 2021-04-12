@@ -1,0 +1,10 @@
+black
+flake8
+isort
+flit
+tox
+pytest
+mccabe
+pylint
+pytest
+coverage

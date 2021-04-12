@@ -1,0 +1,12 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "getitdone"
+author = "Ryan Butler"
+author-email = "ryanleonbutler@gmail.com"
+home-page = "https://github.com/ryanleonbutler/getitdone"
+classifiers = [ "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",]
+description-file = "README.md"
+requires-python = ">=3.7"

@@ -3,13 +3,14 @@
 """
 `getitdone` is a terminal to-do list tool.
 
-Copyright (C) 2020  Ryan Butler
+Copyright (C) 2021  Ryan Butler
 """
 import sqlite3
 from os import mkdir
 from pathlib import Path
 from sqlite3 import Error
 from sys import argv
+
 
 HOME_DIR = str(Path.home())
 DB_NAME = "getitdone_db.sqlite"
