@@ -1,2 +1,2 @@
 codecov:
-  disable_default_path_fixes: false
+  max_report_age: off
