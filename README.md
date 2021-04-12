@@ -6,8 +6,8 @@
 [![License][license badge]][license]
 
 <!-- Links -->
-[codecov]: https://codecov.io/gh/proper-testing/proper
-[commit]: https://github.com/proper-testing/proper/commit/HEAD
+[codecov]: https://codecov.io/gh/ryanleonbutler/getitdone
+[commit]: https://github.com/ryanleonbutler/getitdone/commit/HEAD
 [python]: https://www.python.org/
 [license]: LICENSE
 [release]: https://github.com/ryanleonbutler/getitdone/releases/latest
@@ -17,10 +17,9 @@
 [pypi-image]: https://img.shields.io/pypi/v/getitdone
 [pypi-url]: https://pypi.org/project/getitdone/
 [build-image]: https://github.com/ryanleonbutler/getitdone/actions/workflows/build.yml/badge.svg
-[build-url]: https://github.com/nalgeon/getitdone-py/actions/workflows/build.yml
+[build-url]: https://github.com/ryanleonbutler/getitdone/actions/workflows/build.yml
 [coverage-image]: https://codecov.io/gh/ryanleonbutler/getitdone/branch/master/graph/badge.svg?token=4CQG41WFF4
 [coverage-url]: https://codecov.io/gh/ryanleonbutler/getitdone
-[codecov badge]: https://codecov.io/gh/proper-testing/proper/branch/master/graph/badge.svg
 [commit badge]: https://img.shields.io/github/last-commit/ryanleonbutler/getitdone
 [python versions badge]: https://shields.io/pypi/pyversions/getitdone
 [license badge]: https://img.shields.io/pypi/l/getitdone
