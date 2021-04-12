@@ -11,13 +11,12 @@ from pathlib import Path
 from sqlite3 import Error
 from sys import argv
 
-
 HOME_DIR = str(Path.home())
 DB_NAME = "getitdone_db.sqlite"
 DB_PATH = f"{HOME_DIR}/.getitdone/{DB_NAME}"
 
 
-def create_db(home_dir, db_path):
+def create_db(home_dir: str, db_path: str):
     """Create db in HOME_DIR."""
     createTable = """
     CREATE TABLE IF NOT EXISTS tasks (
@@ -33,7 +32,7 @@ def create_db(home_dir, db_path):
     write_db(connection, createTable)
 
 
-def connect_db(path: str) -> object:
+def connect_db(path: str):
     """Create connection with db.
 
     Args:
@@ -42,20 +41,18 @@ def connect_db(path: str) -> object:
     Returns:
         [type]: [description]
     """
-    connection = None
     try:
         connection = sqlite3.connect(path)
+        return connection
     except Error as e:
-        connection = f"The error '{e}' occurred"
         print(f"The error '{e}' occurred")
-    return connection
 
 
-def write_db(connection: object, query: str):
+def write_db(connection, query: str):
     """Execute SQL write query with connection to db and commit the write.
 
     Args:
-        connection (object): db connection.
+        connection: db connection.
         query (str): SQL query.
     """
     cursor = connection.cursor()
@@ -66,11 +63,11 @@ def write_db(connection: object, query: str):
         print(f"The error '{e}' occurred")
 
 
-def read_db(connection: object, query: str) -> object:
+def read_db(connection, query: str):
     """Execute SQL read query with connection to the db.
 
     Args:
-        connection (object): db connection.
+        connection: db connection.
         query (str): SQL query.
 
     Returns:
@@ -86,11 +83,11 @@ def read_db(connection: object, query: str) -> object:
         print(f"The error '{e}' occurred")
 
 
-def new_task(connection: object, taskName: str):
+def new_task(connection, taskName: str):
     """Insert new task into db.
 
     Args:
-        connection (object): db connection.
+        connection: db connection.
         taskName (str): Name of task.
     """
     query = f"""
@@ -103,11 +100,11 @@ def new_task(connection: object, taskName: str):
     print(f"'{taskName}' added to list")
 
 
-def update_task(connection: object, taskName: str, newName: str):
+def update_task(connection, taskName: str, newName: str):
     """Update task in db.
 
     Args:
-        connection (object): db connection.
+        connection: db connection.
         taskName (str): Current name of task.
         newName (str): New name of task.
     """
@@ -122,11 +119,11 @@ def update_task(connection: object, taskName: str, newName: str):
         print(f"'{taskName}' updated to `{newName}`")
 
 
-def delete_task(connection: object, taskName: str):
+def delete_task(connection, taskName: str):
     """Delete task from db.
 
     Args:
-        connection (object): db connection.
+        connection: db connection.
         taskName (str): Task name to be deleted.
     """
     userInput = input(f"Delete '{taskName}' from your list? Y/N ")

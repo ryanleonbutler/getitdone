@@ -1,3 +1,14 @@
+[![PyPI Version][pypi-image]][pypi-url]
+[![Build Status][build-image]][build-url]
+[![Code Coverage][coverage-image]][coverage-url]
+<!-- Badges -->
+[pypi-image]: https://img.shields.io/pypi/v/getitdone
+[pypi-url]: https://pypi.org/project/getitdone/
+[build-image]: https://github.com/ryanleonbutler/getitdone/actions/workflows/build.yml/badge.svg
+[build-url]: https://github.com/nalgeon/getitdone-py/actions/workflows/build.yml
+[coverage-image]: https://codecov.io/gh/ryanleonbutler/getitdone/branch/master/graph/badge.svg?token=4CQG41WFF4
+[coverage-url]: https://codecov.io/gh/ryanleonbutler/getitdone
+
 # getitdone
 
 ### About
