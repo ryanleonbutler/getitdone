@@ -1,6 +1,18 @@
 [![PyPI Version][pypi-image]][pypi-url]
 [![Build Status][build-image]][build-url]
 [![Code Coverage][coverage-image]][coverage-url]
+[![Python Versions][python versions badge]][python]
+[![Last Commit][commit badge]][commit]
+[![License][license badge]][license]
+
+<!-- Links -->
+[codecov]: https://codecov.io/gh/proper-testing/proper
+[commit]: https://github.com/proper-testing/proper/commit/HEAD
+[python]: https://www.python.org/
+[license]: ./COPYING
+[release]: https://github.com/ryanleonbutler/getitdone/releases/latest
+[github]: https://github.com/ryanleonbutler/getitdone
+
 <!-- Badges -->
 [pypi-image]: https://img.shields.io/pypi/v/getitdone
 [pypi-url]: https://pypi.org/project/getitdone/
@@ -8,6 +20,14 @@
 [build-url]: https://github.com/nalgeon/getitdone-py/actions/workflows/build.yml
 [coverage-image]: https://codecov.io/gh/ryanleonbutler/getitdone/branch/master/graph/badge.svg?token=4CQG41WFF4
 [coverage-url]: https://codecov.io/gh/ryanleonbutler/getitdone
+
+[codecov badge]: https://codecov.io/gh/proper-testing/proper/branch/master/graph/badge.svg
+[commit badge]: https://img.shields.io/github/last-commit/proper-testing/proper.svg?style=flat-square
+[erlang versions badge]: https://img.shields.io/badge/erlang-20.0%20to%2023.3-blue.svg?style=flat-square
+[license badge]: https://img.shields.io/github/license/proper-testing/proper.svg?style=flat-square
+[release badge]: https://img.shields.io/github/release/proper-testing/proper.svg?style=flat-square
+[github badge]: https://github.com/proper-testing/proper/workflows/CI/badge.svg
+
 
 # getitdone
 

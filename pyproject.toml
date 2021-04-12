@@ -7,6 +7,13 @@ module = "getitdone"
 author = "Ryan Butler"
 author-email = "ryanleonbutler@gmail.com"
 home-page = "https://github.com/ryanleonbutler/getitdone"
-classifiers = [ "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",]
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Topic :: Office/Business :: Scheduling',
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+    ]
 description-file = "README.md"
 requires-python = ">=3.7"
