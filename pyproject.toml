@@ -1,19 +1,80 @@
-[build-system]
-requires = ["flit_core >=2,<4"]
-build-backend = "flit_core.buildapi"
+[tool.poetry]
+name = "getitdone"
+version = "0.0.4"
+description = "Command line to-do list application"
+authors = ["Ryan <ryanleonbutler@gmail.com>"]
+license = "GNU Affero General Public License v3.0"
 
-[tool.flit.metadata]
-module = "getitdone"
-author = "Ryan Butler"
-author-email = "ryanleonbutler@gmail.com"
-home-page = "https://github.com/ryanleonbutler/getitdone"
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Topic :: Office/Business :: Scheduling',
-        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-    ]
-description-file = "README.md"
-requires-python = ">=3.7"
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+tox = "^3.24.5"
+pytest = "^7.1.1"
+pylint = "^2.12.2"
+coverage = "^6.3.2"
+pytest-cov = "^3.0.0"
+
+[tool.tox]
+legacy_tox_ini = """
+[Tox]
+isolated_build = true
+skipsdist = true
+envlist =
+    py39,
+    lint,
+    coverage
+[testenv]
+deps =
+    poetry>=1.1.0
+whitelist_external = poetry
+skip_install = true
+commands_pre = poetry install -vvv
+[testenv:lint]
+commands =
+    poetry run flake8 src/getitdone tests/
+    poetry run isort --check-only src/getitdone tests/
+    poetry run black --check --verbose --config ./pyproject.toml src/getitdone ./tests
+[testenv:coverage]
+commands =
+    poetry run pytest -ra -v --cov=tests --cov-report=xml
+    poetry run coverage report -m
+    poetry run coverage html -i
+"""
+
+[tool.black]
+line-length = 119
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+lines_after_imports = 2
+combine_as_imports = true
+include_trailing_comma = true
+
+[tool.pytest.ini_options]
+python_paths = "src/getitdone"
+
+[tool.coverage.report]
+skip_empty = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
