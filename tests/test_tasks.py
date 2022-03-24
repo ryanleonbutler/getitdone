@@ -3,6 +3,7 @@ import os
 
 import getitdone.getitdone as gid
 
+
 HOME_DIR = str(os.getcwd())
 DB_NAME = "test_getitdone_db.sqlite"
 DB_PATH = f"{HOME_DIR}/tests/{DB_NAME}"
@@ -49,7 +50,7 @@ def test_update_task(monkeypatch):
     gid.new_task(connection, oldTaskName)
 
     newTaskName = "Buy full cream milk."
-    monkeypatch.setattr('builtins.input', lambda _: "y")
+    monkeypatch.setattr("builtins.input", lambda _: "y")
     gid.update_task(connection, oldTaskName, newTaskName)
 
     response = gid.read_db(connection, "SELECT name from tasks")
@@ -67,7 +68,7 @@ def test_delete_task(monkeypatch):
     connection = gid.connect_db(DB_PATH)
     taskName = "Buy milk."
     gid.new_task(connection, taskName)
-    monkeypatch.setattr('builtins.input', lambda _: "y")
+    monkeypatch.setattr("builtins.input", lambda _: "y")
     gid.delete_task(connection, taskName)
     response = gid.read_db(connection, "SELECT name from tasks")
     for task in response:

@@ -11,6 +11,7 @@ from pathlib import Path
 from sqlite3 import Error
 from sys import argv
 
+
 HOME_DIR = str(Path.home())
 DB_NAME = "getitdone_db.sqlite"
 DB_PATH = f"{HOME_DIR}/.getitdone/{DB_NAME}"
