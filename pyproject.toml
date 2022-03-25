@@ -55,7 +55,7 @@ commands =
 
 [testenv:tests]
 commands =
-    poetry run pytest -ra -v --cov=tests --cov-report xml .
+    poetry run pytest -ra -v --cov src/getitdone --cov-report xml .
 """
 
 [tool.black]
