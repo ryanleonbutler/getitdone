@@ -1,18 +1,27 @@
 [![PyPI Version][pypi-image]][pypi-url]
+[![Black][black badge]][black]
+[![Flake8][flake8 badge]][flake8]
+[![Imports][isort badge]][isort]
 [![Tests Status][tests-image]][tests-url]
 [![Code Coverage][coverage-image]][coverage-url]
 [![Last Commit][commit badge]][commit]
 
 <!-- Links -->
 [pypi-url]: https://pypi.org/project/getitdone/
+[black]: https://github.com/psf/black
+[flake8]: https://github.com/PyCQA/flake8
+[isort]: https://pycqa.github.io/isort/
 [tests-url]: https://github.com/ryanleonbutler/getitdone/actions/workflows/tests.yml
 [coverage-url]: https://codecov.io/gh/ryanleonbutler/getitdone
 [commit]: https://github.com/ryanleonbutler/getitdone/commit/HEAD
 
 <!-- Badges -->
 [pypi-image]: https://img.shields.io/pypi/v/getitdone
+[black badge]: https://img.shields.io/badge/code%20style-black-000000.svg
+[flake8 badge]: https://github.com/ryanleonbutler/black_star/actions/workflows/lint.yml/badge.svg
+[isort badge]: https://img.shields.io/badge/%20imports-isort-%231674b1
 [tests-image]: https://github.com/ryanleonbutler/getitdone/actions/workflows/tests.yml/badge.svg
-[coverage-image]: https://codecov.io/gh/ryanleonbutler/getitdone/branch/master/graph/badge.svg?token=4CQG41WFF4
+[coverage-image]: https://codecov.io/gh/ryanleonbutler/getitdone/branch/main/graph/badge.svg?token=4CQG41WFF4
 [commit badge]: https://img.shields.io/github/last-commit/ryanleonbutler/getitdone
 
 

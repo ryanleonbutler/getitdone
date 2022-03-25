@@ -41,20 +41,21 @@ envlist =
     py{310,39,38},
     flake8,
     tests
+
 [testenv]
 deps =
     poetry>=1.1.0
 whitelist_external = poetry
 skip_install = true
 commands_pre = poetry install -vvv
+
 [testenv:flake8]
 commands =
     poetry run flake8 src/getitdone tests/
+
 [testenv:tests]
 commands =
-    poetry run pytest -ra -v --cov=tests --cov-report=xml
-    poetry run coverage report -m
-    poetry run coverage html -i
+    poetry run pytest -ra -v --cov=tests --cov-report xml .
 """
 
 [tool.black]
