@@ -29,12 +29,12 @@ jobs:
                   python -m pip install poetry 
                   poetry install -vvv
 
-            - name: Run tox
+            - name: Run pytest and collect coverage
               run: |
-                  poetry run tox
+                  poetry run pytest --cov --cov-report xml .
 
-            - uses: actions/checkout@master
-            - uses: codecov/codecov-action@v1
+            - name: Upload coverage report to Codecov
+              uses: codecov/codecov-action@v2
               with:
                 token: ${{ secrets.CODECOV_TOKEN }}
                 fail_ci_if_error: false
