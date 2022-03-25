@@ -81,9 +81,6 @@ lines_after_imports = 2
 combine_as_imports = true
 include_trailing_comma = true
 
-[tool.pytest.ini_options]
-python_paths = "src/getitdone"
-
 [tool.coverage.report]
 skip_empty = true
 
