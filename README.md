@@ -1,30 +1,19 @@
 [![PyPI Version][pypi-image]][pypi-url]
-[![Build Status][build-image]][build-url]
+[![Tests Status][tests-image]][tests-url]
 [![Code Coverage][coverage-image]][coverage-url]
-[![Python Versions][python versions badge]][python]
 [![Last Commit][commit badge]][commit]
-[![License][license badge]][license]
 
 <!-- Links -->
-[codecov]: https://codecov.io/gh/ryanleonbutler/getitdone
+[pypi-url]: https://pypi.org/project/getitdone/
+[tests-url]: https://github.com/ryanleonbutler/getitdone/actions/workflows/tests.yml
+[coverage-url]: https://codecov.io/gh/ryanleonbutler/getitdone
 [commit]: https://github.com/ryanleonbutler/getitdone/commit/HEAD
-[python]: https://www.python.org/
-[license]: LICENSE
-[release]: https://github.com/ryanleonbutler/getitdone/releases/latest
-[github]: https://github.com/ryanleonbutler/getitdone
 
 <!-- Badges -->
 [pypi-image]: https://img.shields.io/pypi/v/getitdone
-[pypi-url]: https://pypi.org/project/getitdone/
-[build-image]: https://github.com/ryanleonbutler/getitdone/actions/workflows/build.yml/badge.svg
-[build-url]: https://github.com/ryanleonbutler/getitdone/actions/workflows/build.yml
+[tests-image]: https://github.com/ryanleonbutler/getitdone/actions/workflows/tests.yml/badge.svg
 [coverage-image]: https://codecov.io/gh/ryanleonbutler/getitdone/branch/master/graph/badge.svg?token=4CQG41WFF4
-[coverage-url]: https://codecov.io/gh/ryanleonbutler/getitdone
 [commit badge]: https://img.shields.io/github/last-commit/ryanleonbutler/getitdone
-[python versions badge]: https://shields.io/pypi/pyversions/getitdone
-[license badge]: https://img.shields.io/pypi/l/getitdone
-[release badge]: https://img.shields.io/github/v/release/ryanleonbutler/getitdone
-[github badge]: https://github.com/proper-testing/proper/workflows/CI/badge.svg
 
 
 # getitdone
