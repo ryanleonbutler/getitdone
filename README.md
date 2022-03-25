@@ -30,7 +30,7 @@
 # getitdone
 
 ### About
-Command line to-do list application.
+**getitdone** command line to-do list app... now let's make some lists!
 
 I was browsing on the Internet and wanted a really basic todo list application, which was free and opensource. Since I am in the process of learning more about software development I decided to create my own.
 
@@ -70,7 +70,7 @@ Create an issue on GitHub with as much supporting information and detail about t
 Anyone is welcome to contribute to the project. You can submit your pull request and the changes will be reviewed. When submitting changes, ensure your code is "Pythonic". Use only Stand Library modules. No module are allowed that need further installation.
 
 ### License
-Licensing is AGPL by default but an MIT license is available for purchase.
+Licensing is AGPL.
 
 ### Credits
-Duanne Mattheus - Thank you fo providing the name for the application.
+Duanne Mattheus - Thank you for providing the name for the application.

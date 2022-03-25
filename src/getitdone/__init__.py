@@ -1,7 +1,7 @@
 """
-`getitdone` to-do list application... Let's make some lists!
+`getitdone`, command line to-do list app... now let's make some lists!
 
-Copyright (C) 2021  Ryan Butler
+Copyright (C) 2022  Ryan Butler
 """
 
 __version__ = "0.0.4"

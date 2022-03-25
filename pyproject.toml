@@ -7,6 +7,9 @@ license = "GNU Affero General Public License v3.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+SQLAlchemy = "^1.4.32"
+rich = "^12.0.1"
+textual = "^0.1.17"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
@@ -24,21 +27,19 @@ legacy_tox_ini = """
 isolated_build = true
 skipsdist = true
 envlist =
-    py39,
-    lint,
-    coverage
+    py{310,39,38},
+    flake8,
+    tests
 [testenv]
 deps =
     poetry>=1.1.0
 whitelist_external = poetry
 skip_install = true
 commands_pre = poetry install -vvv
-[testenv:lint]
+[testenv:flake8]
 commands =
     poetry run flake8 src/getitdone tests/
-    poetry run isort --check-only src/getitdone tests/
-    poetry run black --check --verbose --config ./pyproject.toml src/getitdone ./tests
-[testenv:coverage]
+[testenv:tests]
 commands =
     poetry run pytest -ra -v --cov=tests --cov-report=xml
     poetry run coverage report -m
