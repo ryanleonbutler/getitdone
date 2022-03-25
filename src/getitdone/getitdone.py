@@ -12,7 +12,6 @@ from pathlib import Path
 from sqlite3 import Error
 from sys import argv
 
-import rich
 from rich.logging import RichHandler
 
 
@@ -23,7 +22,9 @@ DB_PATH = f"{HOME_DIR}/.getitdone/{DB_NAME}"
 
 class List:
     def __init__(self):
-        self.logger = logging.basicConfig(level="NOTSET", datefmt="[%X]", handlers=[RichHandler()])
+        FORMAT = "%(message)s"
+        logging.basicConfig(level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()])
+        self.log = logging.getLogger("rich")
 
     def create_db(self, home_dir: str, db_path: str):
         """Create db in HOME_DIR."""
@@ -53,6 +54,7 @@ class List:
             connection = sqlite3.connect(path)
             return connection
         except Error as e:
+            self.log.error("Error: %s", e)
             print(f"The error '{e}' occurred")
 
     def write_db(self, connection, query: str):
@@ -67,6 +69,7 @@ class List:
             cursor.execute(query)
             connection.commit()
         except Error as e:
+            self.log.error("Error: %s", e)
             print(f"The error '{e}' occurred")
 
     def read_db(self, connection, query: str):
@@ -86,6 +89,7 @@ class List:
             result = cursor.fetchall()
             return result
         except Error as e:
+            self.log.error("Error: %s", e)
             print(f"The error '{e}' occurred")
 
     def new_task(self, connection, taskName: str):
@@ -165,12 +169,15 @@ class List:
         )
 
 
-if __name__ == "__main__":
+def main():
     list = List()
     list.create_db(HOME_DIR, DB_PATH)
     connection = list.connect_db(DB_PATH)
-    action = argv[1].lower()
     try:
+        action = ""
+        if argv[1]:
+            action = argv[1].lower()
+
         if action == "--new" or action == "-n":
             taskName = argv[2]
             list.new_task(connection, taskName)
@@ -188,4 +195,8 @@ if __name__ == "__main__":
         else:
             print("Please refer to help (`--help` or `-h`) for instructions\n")
     except IndexError:
-        print("Please refer to help (`--help` or `-h`) for instructions\n")
+        list.command_help()
+
+
+if __name__ == "__main__":
+    main()

@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "getitdone"
-version = "0.0.4"
+version = "0.0.5"
 description = "Command line to-do list application"
-authors = ["Ryan <ryanleonbutler@gmail.com>"]
+authors = ["Ryan Butler <ryanleonbutler@gmail.com>"]
+readme = "README.md"
 license = "GNU Affero General Public License v3.0"
+homepage = "https://github.com/ryanleonbutler/getitdone"
+repository = "https://github.com/ryanleonbutler/getitdone"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -21,8 +24,16 @@ pylint = "^2.12.2"
 coverage = "^6.3.2"
 pytest-cov = "^3.0.0"
 
+[tool.poetry.scripts]
+gid = 'getitdone.getitdone:main'
+getitdone = 'getitdone.getitdone:main'
+
 [tool.tox]
 legacy_tox_ini = """
+[flake8]
+max-line-length = 119
+max-complexity = 23
+
 [Tox]
 isolated_build = true
 skipsdist = true
