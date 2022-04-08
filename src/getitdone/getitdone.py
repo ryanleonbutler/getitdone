@@ -1,45 +1,49 @@
 #!/usr/bin/env python3
 
 """
-`getitdone`, command line to-do list app... now let's make some lists!
+'getitdone', command line to-do list app... now let's make some lists!
 
 Copyright (C) 2022  Ryan Butler
 """
 import logging
+import os
 import sqlite3
-from os import mkdir
 from pathlib import Path
 from sqlite3 import Error
 from sys import argv
 
+from rich import print as print
+from rich.console import Console
 from rich.logging import RichHandler
+from rich.table import Table
 
 
 HOME_DIR = str(Path.home())
 DB_NAME = "getitdone_db.sqlite"
-DB_PATH = f"{HOME_DIR}/.getitdone/{DB_NAME}"
+DB_DIR_PATH = f"{HOME_DIR}/.getitdone"
+DB_FULL_PATH = f"{HOME_DIR}/.getitdone/{DB_NAME}"
 
 
-class List:
+class Gid:
     def __init__(self):
         FORMAT = "%(message)s"
         logging.basicConfig(level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()])
         self.log = logging.getLogger("rich")
 
-    def create_db(self, home_dir: str, db_path: str):
+    def create_db(self, db_path: str):
         """Create db in HOME_DIR."""
         createTable = """
         CREATE TABLE IF NOT EXISTS tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        name TEXT NOT NULL,
+        status TEXT NOT NULL
         );
         """
         try:
-            mkdir(f"{home_dir}/.getitdone")
-        except FileExistsError:
-            pass
-        connection = self.connect_db(db_path)
-        self.write_db(connection, createTable)
+            connection = self.connect_db(db_path)
+            self.write_db(connection, createTable)
+        except FileExistsError as error:
+            self.log.warn("%s", error)
 
     def connect_db(self, path: str):
         """Create connection with db.
@@ -53,9 +57,8 @@ class List:
         try:
             connection = sqlite3.connect(path)
             return connection
-        except Error as e:
-            self.log.error("Error: %s", e)
-            print(f"The error '{e}' occurred")
+        except Error as error:
+            self.log.error("%s", error)
 
     def write_db(self, connection, query: str):
         """Execute SQL write query with connection to db and commit the write.
@@ -68,9 +71,8 @@ class List:
         try:
             cursor.execute(query)
             connection.commit()
-        except Error as e:
-            self.log.error("Error: %s", e)
-            print(f"The error '{e}' occurred")
+        except Exception as error:
+            self.log.error("Error: %s", error)
 
     def read_db(self, connection, query: str):
         """Execute SQL read query with connection to the db.
@@ -88,11 +90,10 @@ class List:
             cursor.execute(query)
             result = cursor.fetchall()
             return result
-        except Error as e:
-            self.log.error("Error: %s", e)
-            print(f"The error '{e}' occurred")
+        except Exception as error:
+            self.log.error("Error: %s", error)
 
-    def new_task(self, connection, taskName: str):
+    def new_task(self, connection, taskName: str, status: str = "not started"):
         """Insert new task into db.
 
         Args:
@@ -101,12 +102,12 @@ class List:
         """
         query = f"""
             INSERT INTO
-            tasks (name)
+            tasks (name, status)
             VALUES
-            ('{taskName}')
+            ('{taskName}', '{status}')
         """
         self.write_db(connection, query)
-        print(f"'{taskName}' added to list")
+        print(f"\n'{taskName}' added to list...\n")
 
     def update_task(self, connection, taskName: str, newName: str):
         """Update task in db.
@@ -124,7 +125,7 @@ class List:
                 WHERE name = '{taskName}'
             """
             self.write_db(connection, query)
-            print(f"'{taskName}' updated to `{newName}`")
+            print(f"\n'{taskName}' updated to '{newName}'...\n")
 
     def delete_task(self, connection, taskName: str):
         """Delete task from db.
@@ -133,46 +134,58 @@ class List:
             connection: db connection.
             taskName (str): Task name to be deleted.
         """
-        userInput = input(f"Delete '{taskName}' from your list? Y/N ")
+        userInput = input(f"\nDelete '{taskName}' from your list?(Y/N) ")
         if userInput.lower() == "y":
             query = f"DELETE FROM tasks WHERE name = '{taskName}'"
             self.write_db(connection, query)
-            print(f"'{taskName}' deleted")
+            print(f"\n'{taskName}' deleted...\n")
 
     def list_tasks(self, connection):
         """List all tasks in db."""
         query = "SELECT * FROM tasks"
-        response = self.read_db(connection, query)
-        print("\n### get-it-done ###\n\n" "-----------------")
-        if len(response) < 1:
-            print("...No tasks...")
+        response = ""
+        try:
+            response = self.read_db(connection, query)
+        except Exception as error:
+            self.log.error("Error: %s", error)
+
+        table = Table(title="GID - Tasks", caption_justify="left", style="blue")
+        table.add_column("No.", justify="right", style="white", no_wrap=True)
+        table.add_column("Name", justify="left", style="magenta", no_wrap=True)
+        table.add_column("Status", justify="center", style="cyan", no_wrap=True)
+
+        if not response:
+            print("\nGID - no tasks, go have some fun!\n")
         else:
             for task in response:
-                print(f"{task[0]} - {task[1]}")
-        print("-----------------\n")
+                table.add_row(str(task[0]), task[1], task[2])
+            console = Console()
+            console.print("\n", table, "\n")
 
     def command_help(self):
         """Print help with available list of commands and arguments."""
-        print("\n### get-it-done ###\n")
+        print("\nGID - Help\n")
         print(
             "OPTIONS\n"
-            "\t`--new` or `-n` '<task-name>'\n"
-            "\t\tCreate a new task with name in first argument\n\n"
-            "\t`--update` or `-u` '<task-name>' '<new-name>'\n"
-            "\t\tUpdate task in first argument with value of second argument\n\n"
-            "\t`--delete` or `-d` '<task-name>'\n"
-            "\t\tDelete task in first argument with value of second argument\n\n"
-            "\t`--list` or `-l`\n"
-            "\t\tList all tasks\n\n"
-            "\t`--help` or `-h`\n"
-            "\t\tShows man page for todolist\n"
+            "'--new' or '-n' '<task-name>'\n"
+            "\tCreate a new task with name in first argument\n\n"
+            "'--update' or '-u' '<task-name>' '<new-name>'\n"
+            "\tUpdate task in first argument with value of second argument\n\n"
+            "'--delete' or '-d' '<task-name>'\n"
+            "\tDelete task in first argument with value of second argument\n\n"
+            "'--list' or '-l'\n"
+            "\tList all tasks\n\n"
+            "'--help' or '-h'\n"
+            "\tShows man page for todolist\n"
         )
 
 
 def main():
-    list = List()
-    list.create_db(HOME_DIR, DB_PATH)
-    connection = list.connect_db(DB_PATH)
+    gid = Gid()
+    if not os.path.isdir(DB_DIR_PATH):
+        os.mkdir(DB_DIR_PATH)
+        gid.create_db(DB_FULL_PATH)
+    connection = gid.connect_db(DB_FULL_PATH)
     try:
         action = ""
         if argv[1]:
@@ -180,22 +193,22 @@ def main():
 
         if action == "--new" or action == "-n":
             taskName = argv[2]
-            list.new_task(connection, taskName)
+            gid.new_task(connection, taskName)
         elif argv[1] == "--update" or argv[1] == "-u":
             taskName = argv[2]
             newName = argv[3]
-            list.update_task(connection, taskName, newName)
+            gid.update_task(connection, taskName, newName)
         elif argv[1] == "--delete" or argv[1] == "-d":
             taskName = argv[2]
-            list.delete_task(connection, taskName)
+            gid.delete_task(connection, taskName)
         elif argv[1] == "--list" or argv[1] == "-l":
-            list.list_tasks(connection)
+            gid.list_tasks(connection)
         elif argv[1] == "--help" or argv[1] == "-h":
-            list.command_help()
+            gid.command_help()
         else:
-            print("Please refer to help (`--help` or `-h`) for instructions\n")
+            print("Please refer to help ('--help' or '-h') for instructions\n")
     except IndexError:
-        list.command_help()
+        gid.command_help()
 
 
 if __name__ == "__main__":
